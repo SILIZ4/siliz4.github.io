@@ -1,0 +1,26 @@
+---
+layout: default
+---
+
+<header class="post-header">
+<h1 class="post-title">{{ page.title | escape }}</h1>
+</header>
+
+{%- if site.data.code.size < 0 -%}
+    {% for article in site.data.code %}
+        <div class="row">
+            <a class="article_name column" href="{{article.url}}" target="_blank" >
+                {{ article.title }}
+            </a>
+            <div class="article_info column">
+                <b>{{ article.date }}</b> &emsp; {{ article.authors }}
+                <p>
+                    {{ article.summary }}
+                </p>
+            </div>
+          <br/>
+        </div>
+    {% endfor %}
+{%- else -%}
+    Nothing to show yet.
+{%- endif -%}

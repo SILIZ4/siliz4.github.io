@@ -1,0 +1,60 @@
+// Placeholder to allow defining custom styles that override everything else.
+// (Use `_sass/minima/custom-variables.scss` to override variable defaults)
+
+.home_info {
+    padding-top: 50px;
+    height: 200px;
+}
+
+.logo {
+    height:40px;
+    padding-top: 10px;
+    padding-right: 15px;
+}
+
+.home_recent_activity {
+    font-size: large;
+}
+
+.article_name {
+  width: 15%;
+  padding: 10px;
+}
+
+.article_info {
+  width: 75%;
+  padding: 10px;
+}
+
+.portrait {
+    margin: auto;
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-right: 30px;
+    border-radius: 50%;
+    background-size: 0%;
+    height: 200px;
+    width: 200px;
+    overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: hidden;
+}
+
+.thumbnail-mini {
+    width:100px;
+    padding-right: 15px;
+}
+
+.column {
+  float: left;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.site-header {
+    background-color:#f5f5f5;
+}
