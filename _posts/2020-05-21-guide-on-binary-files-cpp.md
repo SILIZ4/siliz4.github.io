@@ -34,7 +34,7 @@ In constrast, the ``float`` type only occupies 4 bytes of memory. In this manner
 
 $$ 8\; \text{numbers}\times 4\;\frac{\text{bytes}}{\text{number}}  = 32 \;\text{bytes}.$$
 
-The file is almost **half as big** as its text counterpart!
+The file is almost **half the size** of its text counterpart!
 
 ### How to implement it?
 
@@ -78,7 +78,7 @@ inputFileStream.read((char*) &fileContent, 8*sizeof(float));
 ```
 Although it is possible to save more complex data type such as structures and classes in binary, this guide don't explain it this as it very quickly becomes complicated. A good place to start for a interested reader is (here)[serialization-cpp]. 
 
-Here is a complete simple program that writes ``data`` into a binary file ``foo.bin``
+Here is a simple program that writes ``data`` into a binary file ``foo.bin``, reads it and output the values to the console.
 ```cpp
 #include <fstream>
 #include <iostream>
@@ -116,6 +116,5 @@ int main(){
     return 0;
 }
 ```
-
 
 [serialization-cpp]: https://isocpp.org/wiki/faq/serialization

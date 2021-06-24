@@ -9,7 +9,7 @@ thumbnail: binary-python.svg
 ## Binary files -- an efficient way to read and write data
 In general, inputing and outputing information on a data storage is a rather slow process that should be avoided as much as possible. However, there are many cases where it is necessary. When the files are reasonably small, the difference between an efficient and an inefficient process is not noticeable. But when the files grow bigger or when the reading and writing are done oftenly, there can be a significant loss of performance by using text files. This guide will demonstrate with an example how one could improve the efficiency of a program that needs to do such operations.
 
-## Why care about binary?
+### Why care about binary?
 When data is stored in a file, it is actually always written in a binary format. However, in a text file, each character is kept separately and, most often than not, this ends up occupying more space than it should.
 
 Consider a dataset composed of a sequence of 20 numbers between 0 and 0.3.
@@ -89,7 +89,7 @@ path.getsize("data.txt")
 
 
 
-## How to save into binary?
+### How to save into binary?
 
 The first step consists of transforming the array in bytes. This is simply accomplished by the built-in function ``bytearray``.
 
@@ -188,7 +188,7 @@ loaded_from_binary
 
 
 
-## Important note and further discussion
+### Important note and further discussion
 Even though here it was shown that writing ``data`` in a binary file is more efficient, it is not always the case. For instance, if the data had been saved in ``float64``, the size of the binary file would be doubled. Furthermore, the elements of ``data`` have a lot of decimals and each decimal has to be represented by a character in the text file. By using numbers with fewer decimals, the text format would actually fare better:
 
 
@@ -213,5 +213,6 @@ remove("data.bin")
 In order to maximise the saved space and the effiency benefits, one must chose wisely the type used to save. In these examples, each character saved in the text file requires 1 byte and each number is seperated by a space. Each element in the data then occupies at minimum 2 bytes. But this size can be surpassed easily by using a ``float16`` which always occupies 2 bytes of memory.
 
 For those interested, the standard and most common types are listed [here][ctypes].
+
 
 [ctypes]: https://www.tutorialspoint.com/cprogramming/c_data_types.htmhere
