@@ -1,0 +1,6 @@
+- title: BaseGraph
+  date: 2021-07-26
+  url: https://github.com/antoineallard/base_graph
+  logo: github.svg
+  summary: Graph library with low memory footprint that efficiently computes different metrics.
+  description: The library is written in C++ and depends only on the Standard Template Library (STL). It also provides a Python interface with <a href="https://github.com/pybind/pybind11">Pybind11</a>.

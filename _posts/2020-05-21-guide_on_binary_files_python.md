@@ -3,7 +3,8 @@ layout: post
 title: Read and write binary files in Python
 author: Simon Lizotte
 date: '2020-05-21 17:15'
-thumbnail: binary-python.svg
+thumbnail: python.svg
+image: binary-python.svg
 ---
 
 ## Binary files -- an efficient way to read and write data

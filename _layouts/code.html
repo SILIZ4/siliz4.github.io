@@ -6,18 +6,24 @@ layout: default
 <h1 class="post-title">{{ page.title | escape }}</h1>
 </header>
 
-{%- if site.data.code.size < 0 -%}
-    {% for article in site.data.code %}
+{%- if site.data.code.size > 0 -%}
+    {% for code in site.data.code %}
         <div class="row">
-            <a class="article_name column" href="{{article.url}}" target="_blank" >
-                {{ article.title }}
+
+          <div class="column">
+          <a href="{{ code.url | relative_url }}">
+            <img class="column logo" src="/assets/logos/{{ code.logo }}" >
+          </a>
+          </div>
+
+          <div class="article_info column">
+            <a href="{{code.url}}" target="_blank" >
+              {{ code.title }}:
             </a>
-            <div class="article_info column">
-                <b>{{ article.date }}</b> &emsp; {{ article.authors }}
-                <p>
-                    {{ article.summary }}
-                </p>
+            <div class="code-description">
+            {{ code.summary }}
             </div>
+          </div>
           <br/>
         </div>
     {% endfor %}

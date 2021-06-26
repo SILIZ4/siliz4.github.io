@@ -21,7 +21,7 @@
 title: Simon Lizotte
 email: simon.lizotte.1@ulaval.ca
 description: >- # this means to ignore newlines until "baseurl:"
-  Personal website of Simon Lizotte published papers, code and various small blog posts.
+  Personal website of Simon Lizotte's published papers, code and various small blog posts.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://simonlizotte.ca" # the base hostname & protocol for your site, e.g. http://example.com
 social:

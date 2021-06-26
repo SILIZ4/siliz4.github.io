@@ -7,7 +7,8 @@ category:
         - guides
         - tutorials
 summary: An efficient way to read and write data in C++
-thumbnail: binary-cpp.svg
+thumbnail: cpp.svg
+image: binary-cpp.svg
 ---
 
 ## Binary files -- an efficient way to read and write data

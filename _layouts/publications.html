@@ -6,7 +6,7 @@ layout: default
 <h1 class="post-title">{{ page.title | escape }}</h1>
 </header>
 
-{%- if site.data.publications.size < 0 -%}
+{%- if site.data.publications.size > 0 -%}
     {% for article in site.data.publications %}
         <div class="row">
             <a class="article_name column" href="{{article.url}}" target="_blank" >
