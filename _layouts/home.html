@@ -34,7 +34,6 @@ layout: default
     {% assign activity = activity | concat: site.data.code %}
   {%- endif -%}
 
-  {% assign activity = activity | sort: 'date' | reverse %}
 
   {%- if activity.size > 0 -%}
     {%- if page.list_title -%}
