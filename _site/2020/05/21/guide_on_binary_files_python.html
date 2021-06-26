@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Read and write binary files in Python | Simon Lizotte</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Read and write binary files in Python" />
+<meta name="author" content="Simon Lizotte" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Binary files – an efficient way to read and write data In general, inputing and outputing information on a data storage is a rather slow process that should be avoided as much as possible. However, there are many cases where it is necessary. When the files are reasonably small, the difference between an efficient and an inefficient process is not noticeable. But when the files grow bigger or when the reading and writing are done oftenly, there can be a significant loss of performance by using text files. This guide will demonstrate with an example how one could improve the efficiency of a program that needs to do such operations." />
+<meta property="og:description" content="Binary files – an efficient way to read and write data In general, inputing and outputing information on a data storage is a rather slow process that should be avoided as much as possible. However, there are many cases where it is necessary. When the files are reasonably small, the difference between an efficient and an inefficient process is not noticeable. But when the files grow bigger or when the reading and writing are done oftenly, there can be a significant loss of performance by using text files. This guide will demonstrate with an example how one could improve the efficiency of a program that needs to do such operations." />
+<link rel="canonical" href="https://simonlizotte.ca/2020/05/21/guide_on_binary_files_python.html" />
+<meta property="og:url" content="https://simonlizotte.ca/2020/05/21/guide_on_binary_files_python.html" />
+<meta property="og:site_name" content="Simon Lizotte" />
+<meta property="og:image" content="https://simonlizotte.ca/binary-python.svg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-05-21T17:15:00-04:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://simonlizotte.ca/binary-python.svg" />
+<meta property="twitter:title" content="Read and write binary files in Python" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","image":"https://simonlizotte.ca/binary-python.svg","headline":"Read and write binary files in Python","dateModified":"2020-05-21T17:15:00-04:00","datePublished":"2020-05-21T17:15:00-04:00","description":"Binary files – an efficient way to read and write data In general, inputing and outputing information on a data storage is a rather slow process that should be avoided as much as possible. However, there are many cases where it is necessary. When the files are reasonably small, the difference between an efficient and an inefficient process is not noticeable. But when the files grow bigger or when the reading and writing are done oftenly, there can be a significant loss of performance by using text files. This guide will demonstrate with an example how one could improve the efficiency of a program that needs to do such operations.","mainEntityOfPage":{"@type":"WebPage","@id":"https://simonlizotte.ca/2020/05/21/guide_on_binary_files_python.html"},"url":"https://simonlizotte.ca/2020/05/21/guide_on_binary_files_python.html","author":{"@type":"Person","name":"Simon Lizotte"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://simonlizotte.ca/feed.xml" title="Simon Lizotte" />
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Simon Lizotte</a><div class="header">
+      <input class="menu-btn" type="checkbox" id="menu-btn" />
+      <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+      
+        
+        <ul class="menu"><li>
+            <a class="page-link" href="/about/">About</a>
+            </li><li>
+            <a class="page-link" href="/code/">Code</a>
+            </li><li>
+            <a class="page-link" href="/posts/">Posts</a>
+            </li><li>
+            <a class="page-link" href="/publications/">Publications</a>
+            </li></ul>
+        
+      
+    </div></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      jax: ["input/TeX", "output/HTML-CSS"],
+      extensions: ["tex2jax.js"],
+      "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] },
+      tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno" },
+      TeX: { noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } } },
+      messageStyle: "none"
+    });
+  </script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+
+  <header class="post-header">
+    <h3 class="post-title p-name" itemprop="name headline">Read and write binary files in Python</h3>
+    <p class="post-meta"><time class="dt-published" datetime="2020-05-21T17:15:00-04:00" itemprop="datePublished">
+        May 21, 2020
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Simon Lizotte</span></span></p>
+  </header><img src="/assets/images/binary-python.svg" ><div class="post-content e-content" itemprop="articleBody">
+    <h2 id="binary-files--an-efficient-way-to-read-and-write-data">Binary files – an efficient way to read and write data</h2>
+<p>In general, inputing and outputing information on a data storage is a rather slow process that should be avoided as much as possible. However, there are many cases where it is necessary. When the files are reasonably small, the difference between an efficient and an inefficient process is not noticeable. But when the files grow bigger or when the reading and writing are done oftenly, there can be a significant loss of performance by using text files. This guide will demonstrate with an example how one could improve the efficiency of a program that needs to do such operations.</p>
+
+<h3 id="why-care-about-binary">Why care about binary?</h3>
+<p>When data is stored in a file, it is actually always written in a binary format. However, in a text file, each character is kept separately and, most often than not, this ends up occupying more space than it should.</p>
+
+<p>Consider a dataset composed of a sequence of 20 numbers between 0 and 0.3.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">numpy</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mi">20</span><span class="p">).</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">data</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([0.        , 0.01578947, 0.03157895, 0.04736842, 0.06315789,
+       0.07894737, 0.09473684, 0.11052632, 0.12631579, 0.14210527,
+       0.15789473, 0.17368421, 0.18947369, 0.20526315, 0.22105263,
+       0.23684211, 0.25263157, 0.26842105, 0.28421053, 0.3       ],
+      dtype=float32)
+</code></pre></div></div>
+
+<p>A easy and convenient way to store <code class="language-plaintext highlighter-rouge">data</code> is to write the values in a regular file by separating each number by a space.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">save_array_in_text</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_stream</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">array</span><span class="p">:</span>
+            <span class="n">file_stream</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+            <span class="n">file_stream</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">' '</span><span class="p">)</span>
+
+
+<span class="n">save_array_in_text</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">"data.txt"</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"data.txt"</span><span class="p">,</span> <span class="s">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_stream</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">file_stream</span><span class="p">.</span><span class="n">readline</span><span class="p">())</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.0 0.015789473 0.031578947 0.047368422 0.06315789 0.078947365 0.094736844 0.110526316 0.12631579 0.14210527 0.15789473 0.17368421 0.18947369 0.20526315 0.22105263 0.23684211 0.25263157 0.26842105 0.28421053 0.3 
+</code></pre></div></div>
+
+<p>The data is simply retrieved by parsing the text file.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"data.txt"</span><span class="p">,</span> <span class="s">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_stream</span><span class="p">:</span>
+    <span class="n">file_data</span> <span class="o">=</span> <span class="n">file_stream</span><span class="p">.</span><span class="n">readline</span><span class="p">().</span><span class="n">strip</span><span class="p">()</span>  <span class="c1"># Strip removes the trailing white space
+</span>
+<span class="n">file_data</span> <span class="o">=</span> <span class="n">file_data</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">)</span>
+<span class="n">numpy</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">file_data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([0.        , 0.01578947, 0.03157895, 0.04736842, 0.06315789,
+       0.07894737, 0.09473684, 0.11052632, 0.12631579, 0.14210527,
+       0.15789473, 0.17368421, 0.18947369, 0.20526315, 0.22105263,
+       0.23684211, 0.25263157, 0.26842105, 0.28421053, 0.3       ])
+</code></pre></div></div>
+
+<p>Note the size of the file in bytes.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">remove</span>
+
+<span class="n">path</span><span class="p">.</span><span class="n">getsize</span><span class="p">(</span><span class="s">"data.txt"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>212
+</code></pre></div></div>
+
+<h3 id="how-to-save-into-binary">How to save into binary?</h3>
+
+<p>The first step consists of transforming the array in bytes. This is simply accomplished by the built-in function <code class="language-plaintext highlighter-rouge">bytearray</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">bytearray</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bytearray(b'\x00\x00\x00\x00\xedX\x81&lt;\xedX\x01=d\x05B=\xedX\x81=(\xaf\xa1=d\x05\xc2=\x9f[\xe2=\xedX\x01&gt;\x0b\x84\x11&gt;(\xaf!&gt;F\xda1&gt;d\x05B&gt;\x810R&gt;\x9f[b&gt;\xbd\x86r&gt;\xedX\x81&gt;|n\x89&gt;\x0b\x84\x91&gt;\x9a\x99\x99&gt;')
+</code></pre></div></div>
+
+<p>Now, one simply needs to add the letter “b” in the <code class="language-plaintext highlighter-rouge">open</code> built-in function to save in a binary format.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">save_array_in_binary</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_stream</span><span class="p">:</span>
+        <span class="n">file_stream</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">array</span><span class="p">))</span>
+
+
+<span class="n">save_array_in_binary</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">"data.bin"</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"data.bin"</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_stream</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">file_stream</span><span class="p">.</span><span class="n">readline</span><span class="p">())</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>b'\x00\x00\x00\x00\xedX\x81&lt;\xedX\x01=d\x05B=\xedX\x81=(\xaf\xa1=d\x05\xc2=\x9f[\xe2=\xedX\x01&gt;\x0b\x84\x11&gt;(\xaf!&gt;F\xda1&gt;d\x05B&gt;\x810R&gt;\x9f[b&gt;\xbd\x86r&gt;\xedX\x81&gt;|n\x89&gt;\x0b\x84\x91&gt;\x9a\x99\x99&gt;'
+</code></pre></div></div>
+
+<p>Let’s now inspect the size of this file.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">path</span><span class="p">.</span><span class="n">getsize</span><span class="p">(</span><span class="s">"data.bin"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>80
+</code></pre></div></div>
+
+<p>This is a significant difference: the file is around <strong>38% the size of the other!</strong></p>
+
+<p>The values in binary can be read with the function <code class="language-plaintext highlighter-rouge">fromfile</code> of the <code class="language-plaintext highlighter-rouge">numpy</code> library.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"data.bin"</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_stream</span><span class="p">:</span>
+    <span class="n">loaded_from_binary</span> <span class="o">=</span> <span class="n">numpy</span><span class="p">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">file_stream</span><span class="p">)</span>
+<span class="n">loaded_from_binary</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([3.00928836e-17, 1.28047338e-13, 8.04184663e-12, 1.33571292e-10,
+       1.01955355e-09, 4.15664034e-09, 1.69402660e-08, 6.90159393e-08,
+       1.89480061e-07, 3.81469873e-07])
+</code></pre></div></div>
+
+<p>This doesn’t seem correct, right? This is one of the drawback of using binary files: if the type is incorrect, the data won’t be retrieved properly. The data was saved in the type <code class="language-plaintext highlighter-rouge">float32</code>, but by default, <code class="language-plaintext highlighter-rouge">numpy</code> assumes the data is in the <code class="language-plaintext highlighter-rouge">float64</code> type.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"Saved data type:"</span><span class="p">,</span> <span class="n">data</span><span class="p">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Loaded data type:"</span><span class="p">,</span> <span class="n">loaded_from_binary</span><span class="p">.</span><span class="n">dtype</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Saved data type: float32
+Loaded data type: float64
+</code></pre></div></div>
+
+<p>This problem is solved by specifying to <code class="language-plaintext highlighter-rouge">numpy</code> the correct data type.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"data.bin"</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_stream</span><span class="p">:</span>
+    <span class="n">loaded_from_binary</span> <span class="o">=</span> <span class="n">numpy</span><span class="p">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">file_stream</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">loaded_from_binary</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([0.        , 0.01578947, 0.03157895, 0.04736842, 0.06315789,
+       0.07894737, 0.09473684, 0.11052632, 0.12631579, 0.14210527,
+       0.15789473, 0.17368421, 0.18947369, 0.20526315, 0.22105263,
+       0.23684211, 0.25263157, 0.26842105, 0.28421053, 0.3       ],
+      dtype=float32)
+</code></pre></div></div>
+
+<h3 id="important-note-and-further-discussion">Important note and further discussion</h3>
+<p>Even though here it was shown that writing <code class="language-plaintext highlighter-rouge">data</code> in a binary file is more efficient, it is not always the case. For instance, if the data had been saved in <code class="language-plaintext highlighter-rouge">float64</code>, the size of the binary file would be doubled. Furthermore, the elements of <code class="language-plaintext highlighter-rouge">data</code> have a lot of decimals and each decimal has to be represented by a character in the text file. By using numbers with fewer decimals, the text format would actually fare better:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span> <span class="o">=</span> <span class="n">numpy</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">9.5</span><span class="p">,</span> <span class="mi">20</span><span class="p">).</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="p">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="n">save_array_in_text</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">"data.txt"</span><span class="p">)</span>
+<span class="n">save_array_in_binary</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">"data.bin"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"data:"</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Size of text file"</span><span class="p">,</span> <span class="n">path</span><span class="p">.</span><span class="n">getsize</span><span class="p">(</span><span class="s">"data.txt"</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Size of binary file"</span><span class="p">,</span> <span class="n">path</span><span class="p">.</span><span class="n">getsize</span><span class="p">(</span><span class="s">"data.bin"</span><span class="p">))</span>
+
+<span class="n">remove</span><span class="p">(</span><span class="s">"data.txt"</span><span class="p">)</span>
+<span class="n">remove</span><span class="p">(</span><span class="s">"data.bin"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data: [0.  0.5 1.  1.5 2.  2.5 3.  3.5 4.  4.5 5.  5.5 6.  6.5 7.  7.5 8.  8.5
+ 9.  9.5]
+Size of text file 80
+Size of binary file 160
+</code></pre></div></div>
+
+<p>In order to maximise the saved space and the effiency benefits, one must chose wisely the type used to save. In these examples, each character saved in the text file requires 1 byte and each number is seperated by a space. Each element in the data then occupies at minimum 2 bytes. But this size can be surpassed easily by using a <code class="language-plaintext highlighter-rouge">float16</code> which always occupies 2 bytes of memory.</p>
+
+<p>For those interested, the standard and most common types are listed <a href="https://www.tutorialspoint.com/cprogramming/c_data_types.htmhere">here</a>.</p>
+
+
+  </div><a class="u-url" href="/2020/05/21/guide_on_binary_files_python.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          Follow me:
+          <div style="margin-top:-10px">
+            <div class="column">
+              <a href="/feed.xml">
+                <svg class="svg-icon orange">
+                  <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+                </svg>
+              </a>
+            </div>
+            <div class="social-links"><a rel="me" href="https://github.com/siliz4" title="siliz4"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></div>
+          </div>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Personal website of Simon Lizotte&#39;s published papers, code and various small blog posts.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
