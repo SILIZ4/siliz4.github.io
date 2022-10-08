@@ -8,17 +8,16 @@ layout: default
 
 {%- if site.data.publications.size > 0 -%}
     {% for article in site.data.publications %}
-        <div class="row">
-            <a class="article_name column" href="{{article.url}}" target="_blank" >
-                {{ article.title }}
-            </a>
-            <div class="article_info column">
-                <b>{{ article.date }}</b> &emsp; {{ article.authors }}
-                <p>
-                    {{ article.summary }}
-                </p>
+        {% assign odd = forloop.index | modulo: 2 %}
+        <div class="article_item {% if odd == 1 %} article_bg {% endif %}">
+            <div style="font-size:large">
+                <b>{{ article.title }}</b> &mdash;
+                <a href="{{article.url}}" target="_blank" >
+                    {{ article.journal }}
+                </a>
             </div>
-          <br/>
+            {{ article.date }} &emsp; {{ article.authors }}
+            <br>
         </div>
     {% endfor %}
 {%- else -%}

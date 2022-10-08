@@ -6,7 +6,7 @@ layout: home
 list_title: Recent Activity
 ---
 
-<b>Physics (MSc)</b>, Université Laval
+<b>Physics (PhD)</b>, Université Laval
 
 I'm working under the supervision of <a href="https://antoineallard.github.io"> Antoine Allard</a>
-and <a href="https://www.jgyoung.ca"> Jean-Gabriel Young</a>. I'm mainly interested in numerical methods, Bayesian inference, Markov chains and hypergraphs.
+and <a href="https://www.jgyoung.ca"> Jean-Gabriel Young</a>. I'm interested in complex systems, statistical physics and computer science.

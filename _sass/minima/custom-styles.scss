@@ -15,14 +15,12 @@
   font-size: large;
 }
 
-.article_name {
-  width: 15%;
+.article_item {
   padding: 10px;
 }
 
-.article_info {
-  width: 75%;
-  padding: 10px;
+.article_bg {
+    background-color: $table-zebra-color;
 }
 
 .portrait-info-container {
