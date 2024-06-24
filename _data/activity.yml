@@ -1,0 +1,47 @@
+- title: Best Poster Award at NetSci2024
+  date: 2024-06-24
+  description: I presented our work on probabilistic hyperbolic embeddings during the poster session at NetSci 2024 and was honored to receive the Best Poster Award! It was a pleasure discussing our research with many of you, and I appreciate everyone who stopped by my poster!
+
+- title: "New preprint: Symmetry-driven embedding of networks in hyperbolic space"
+  date: 2024-06-17
+  description: This work presents a Bayesian model that can find credible intervals for the embedding coordinates of a graph and the properties extracted from them. Sampling the posterior of the model is difficult and was made possible by utilizing mesoscale "quasi" symmetries. <a href="">link</a>
+
+- title: Attended CNWW 2023
+  date: 2023-12-23
+  description: This was my first time attending a school and working with students outside of my university. It was a lot of fun hanging out with you and guiding you around my hometown!
+
+- title: "New paper: Hypergraph reconstruction from uncertain pairwise observations"
+  date: 2023-12-04
+  description: This work presents a Bayesian model that determines the underlying hypergraph structure directly from noisy pairwise measurements. We show that correlations induced by hyperedges in our model result in a more accurate reconstruction. <a href="https://www.nature.com/articles/s41598-023-48081-w">link</a>
+
+- title: Successfully completed PhD exam
+  date: 2023-11-22
+  description: After a few months of hard work, I am proud to announce that I am on track for my PhD after successfully completing my exam! Many thanks to Khader Khadraoui, Patrick Desrosiers, Jean-Gabriel Young, and Antoine Allard for taking the time to read my work and for their helpful criticisms and discussions.
+
+- title: Talk at NetSci 2023
+  date: 2023-07-17
+  description: I also had the chance to present this ongoing work in the network geometry parallel session. This was my first time attending NetSci in person, and it was a blast to meet everyone and finally put a face to the names!
+
+- title: Invited talk at NESS 2023
+  date: 2023-06-09
+  description: I was invited to present our ongoing work on the inference of hyperbolic embedding of graphs at NESS 2023. As NESS is a conference focused on Statistics, I had the opportunity to sharpen my skills and engage in discussions with specialists outside my field.
+
+- title: Awarded FRQNT's PhD grant
+  date: 2023-04-27
+  description: I am honored to have been awarded another PhD grant, this time from the Fonds de recherche du Québec! Once again, I cannot thank enough my advisors for their thorough review of my submission.
+
+- title: Completed my master's degree
+  date: 2022-11-30
+  description: Today, I submitted the final version of my master's thesis titled "Inférence de la structure d’interactions de données bruitées." I am honored that my work has been recognized with the highest distinction, the Board of Honour, at Université Laval. This achievement would not have been possible without the guidance and excellence of my advisors, Antoine Allard and Jean-Gabriel Young. I am now eager to continue on to my PhD, marking the next step in my academic journey. <a href="https://ulaval.on.worldcat.org/oclc/1355289498">link (french)</a>
+
+- title: Talk at NetSci 2022
+  date: 2022-07-25
+  description: I had the opportunity to present my master’s work during this year's conference. It’s unfortunate that the event was held online, but I look forward to meeting other researchers in the community in the future!
+
+- title: Invited seminar at CIMMUL
+  date: 2022-04-08
+  description: I am honored of being invited for a talk for the first time! I presented how Bayesian inference can be used in order to retrieve higher-order interactions directly from noisy pairwise observations.
+
+- title: Awarded Sentinelle North's PhD grant
+  date: 2021-12-20
+  description: I was awarded my first ever grant from Sentinelle North and still cannot believe it! I am deeply appreciative of the immense help from my advisors Antoine Allard and Jean-Gabriel Young from the writing of this submission to the overall support in my academic journey.
