@@ -6,7 +6,9 @@ layout: home
 list_title: Recent Activity
 ---
 
-<b>Physics (PhD)</b>, Université Laval
+I am a PhD student in Physics at <a href="https://dynamicalab.github.io/">Dynamica</a> at Université Laval, advised by <a href="https://antoineallard.github.io"> Antoine Allard</a> and coadvised by <a href="https://www.jgyoung.ca"> Jean-Gabriel Young</a>.
 
-I'm working under the supervision of <a href="https://antoineallard.github.io"> Antoine Allard</a>
-and <a href="https://www.jgyoung.ca"> Jean-Gabriel Young</a>. I'm interested in complex systems, statistical physics and computer science.
+I obtained my Master's degree also at Dynamica in 2022 under the supervision of Antoine Allard and Jean-Gabriel Young.
+
+I'm interested in the intricacies of the structure of complex networks.
+I enjoy using Bayesian statistics and computational methods to improve our understanding of network models and properties.
