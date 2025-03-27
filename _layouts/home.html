@@ -19,26 +19,47 @@ layout: default
   </div>
 
 
-  {%- if site.data.activity.size > 0 -%}
-      <h2>News <hr></h2>
-
-      {% for activity in site.data.activity %}
-          <div class="row" style="margin-bottom:4%">
-            <div class="article_info">
-              {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-              <time class="dt-published post-meta" datetime="{{ activity.date | date_to_xmlschema }}" itemprop="datePublished">
-                {{ activity.date | date: date_format }}
-              </time>
-              <br>
-              <b>{{ activity.title }}</b>
-              <div class="code-description">
-              {{ activity.description }}
+  <h2>Publications</h2>
+  {%- if site.data.publications.size > 0 -%}
+      {% for article in site.data.publications %}
+          {% assign odd = forloop.index | modulo: 2 %}
+          <div class="article_item {% if odd == 1 %} article_bg {% endif %}">
+              <div style="font-size:large">
+                  <b>{{ article.title }}</b> &mdash;
+                  <a href="{{article.url}}" target="_blank" >
+                      {{ article.journal }}
+                  </a>
               </div>
-            </div>
-            <br/>
+              {{ article.date }} &emsp; {{ article.authors }}
+              <br>
           </div>
       {% endfor %}
   {%- else -%}
       Nothing to show yet.
   {%- endif -%}
+
+
+
+  <!--{%- if site.data.activity.size > 0 -%}-->
+      <!--<h2>News <hr></h2>-->
+
+      <!--{% for activity in site.data.activity %}-->
+          <!--<div class="row" style="margin-bottom:4%">-->
+            <!--<div class="article_info">-->
+              <!--{%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}-->
+              <!--<time class="dt-published post-meta" datetime="{{ activity.date | date_to_xmlschema }}" itemprop="datePublished">-->
+                <!--{{ activity.date | date: date_format }}-->
+              <!--</time>-->
+              <!--<br>-->
+              <!--<b>{{ activity.title }}</b>-->
+              <!--<div class="code-description">-->
+              <!--{{ activity.description }}-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<br/>-->
+          <!--</div>-->
+      <!--{% endfor %}-->
+  <!--{%- else -%}-->
+      <!--Nothing to show yet.-->
+  <!--{%- endif -%}-->
 </div>

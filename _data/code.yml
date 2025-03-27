@@ -8,4 +8,4 @@
   date: 2021-07-26
   url: https://github.com/DynamicaLab/hypergraph-bayesian-reconstruction
   logo: github.svg
-  summary: Python module to reconstruct hypergraphs from pairwise observations (<a href="https://www.nature.com/articles/s41598-023-48081-w">paper</a>).
+  summary: Python module to reconstruct hypergraphs from pairwise observations (code for <a href="https://www.nature.com/articles/s41598-023-48081-w">this paper</a>).

@@ -8,10 +8,7 @@
 
     {%- if titles_size > 0 -%}
     <div class="header">
-      <input class="menu-btn" type="checkbox" id="menu-btn" />
       <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
-      {% comment %}<nav class="site-nav">{% endcomment %}
-        {% comment %}<div class="trigger">{% endcomment %}
         <ul class="menu">
           {%- for path in page_paths -%}
             {%- assign my_page = site.pages | where: "path", path | first -%}
@@ -22,8 +19,6 @@
             {%- endif -%}
           {%- endfor -%}
         </ul>
-        {% comment %}</div>{% endcomment %}
-      {% comment %}</nav>{% endcomment %}
     </div>
     {%- endif -%}
   </div>

@@ -3,6 +3,7 @@
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
 layout: home
+title: Simon Lizotte
 list_title: Recent Activity
 ---
 
@@ -11,4 +12,4 @@ I am a PhD student in Physics at <a href="https://dynamicalab.github.io/">Dynami
 I obtained my Master's degree also at Dynamica in 2022 under the supervision of Antoine Allard and Jean-Gabriel Young.
 
 I'm interested in the intricacies of the structure of complex networks.
-I enjoy using Bayesian statistics and computational methods to improve our understanding of network models and properties.
+I use Bayesian statistics and computational methods to improve our understanding of network models and properties.

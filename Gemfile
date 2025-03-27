@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-gem "minima"
+gem "minima", github: "jekyll/minima", ref: "38a84a9"
 gem "github-pages", "~> 231", group: :jekyll_plugins
 
 # Plugins
